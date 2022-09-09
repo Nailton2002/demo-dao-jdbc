@@ -16,6 +16,7 @@ public class Programa {
 		Scanner sc = new Scanner(System.in);
 		
 		VendedorDao vendedorDao = DaoFactory.createVendedorDao();
+		
 		System.out.println("======= Teste 1: Vendedor buscar todos por id ========");
 		Vendedor vend = vendedorDao.findById(3);
 		System.out.println(vend);

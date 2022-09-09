@@ -10,7 +10,7 @@ public interface DepartamentoDao {
 
 	void update(Departamento obj);
 
-	void deleteById(Departamento id);
+	void deleteById(Integer id);
 
 	Departamento findById(Integer id);
 
