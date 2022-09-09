@@ -29,10 +29,16 @@ public class Programa {
 		for (Vendedor obj : list) {
 			System.out.println(obj);
 		}
+//
+//		System.out.println("\n======= Teste 4: Inserindo vendedores ========");
+//		Vendedor novoVendedor = new Vendedor(null, "Nailton", "nal@email.com", new Date(), 3000.0, departamento);
+//		vendedorDao.insert(novoVendedor);
+//		System.out.println("Inserindo, novo id = " + novoVendedor.getId());
 
-		System.out.println("\n======= Teste 4: Inserindo vendedores ========");
-		Vendedor novoVendedor = new Vendedor(null, "Nailton", "nal@email.com", new Date(), 3000.0, departamento);
-		vendedorDao.insert(novoVendedor);
-		System.out.println("Inserindo, novo id = " + novoVendedor.getId());
+		System.out.println("\n======= Teste 5: Atualizando vendedores ========");
+		vend = vendedorDao.findById(1);
+		vend.setNome("Mendes");
+		vendedorDao.update(vend);
+		System.out.println("Atualização do nome do vendedor!");
 	}
 }

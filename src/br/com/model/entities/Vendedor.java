@@ -60,7 +60,7 @@ public class Vendedor implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Double getBasaSalarial() {
+	public Double getBaseSalarial() {
 		return baseSalarial;
 	}
 
