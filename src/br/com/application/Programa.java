@@ -12,16 +12,22 @@ public class Programa {
 	public static void main(String[] args) {
 
 		VendedorDao vendedorDao = DaoFactory.createVendedorDao();
-		System.out.println("=======Teste 1: Vendedor buscar todos por id ========");
+		System.out.println("======= Teste 1: Vendedor buscar todos por id ========");
 		Vendedor vend = vendedorDao.findById(3);
 		System.out.println(vend);
 
-		System.out.println("\n=======Teste 2: Vendedor buscar por departamento ========");
+		System.out.println("\n======= Teste 2: Vendedor buscar por departamento ========");
 		Departamento departamento = new Departamento(2, null);
 		List<Vendedor> list = vendedorDao.findByDepartamento(departamento);
 		for (Vendedor obj : list) {
 			System.out.println(obj);
 		}
-	}
 
+		System.out.println("\n======= Teste 3: Listando todos os vendedores ========");
+		list = vendedorDao.findAll();
+		for (Vendedor obj : list) {
+			System.out.println(obj);
+		}
+
+	}
 }
