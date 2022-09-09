@@ -2,6 +2,7 @@ package br.com.application;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import br.com.model.dao.DaoFactory;
 import br.com.model.dao.VendedorDao;
@@ -12,6 +13,8 @@ public class Programa {
 
 	public static void main(String[] args) {
 
+		Scanner sc = new Scanner(System.in);
+		
 		VendedorDao vendedorDao = DaoFactory.createVendedorDao();
 		System.out.println("======= Teste 1: Vendedor buscar todos por id ========");
 		Vendedor vend = vendedorDao.findById(3);
@@ -29,16 +32,23 @@ public class Programa {
 		for (Vendedor obj : list) {
 			System.out.println(obj);
 		}
-//
-//		System.out.println("\n======= Teste 4: Inserindo vendedores ========");
-//		Vendedor novoVendedor = new Vendedor(null, "Nailton", "nal@email.com", new Date(), 3000.0, departamento);
-//		vendedorDao.insert(novoVendedor);
-//		System.out.println("Inserindo, novo id = " + novoVendedor.getId());
+
+		System.out.println("\n======= Teste 4: Inserindo vendedores ========");
+		Vendedor novoVendedor = new Vendedor(null, "Nailton", "nal@email.com", new Date(), 3000.0, departamento);
+		vendedorDao.insert(novoVendedor);
+		System.out.println("Inserindo, novo id = " + novoVendedor.getId());
 
 		System.out.println("\n======= Teste 5: Atualizando vendedores ========");
 		vend = vendedorDao.findById(1);
 		vend.setNome("Mendes");
 		vendedorDao.update(vend);
 		System.out.println("Atualização do nome do vendedor!");
+		
+		System.out.println("\n======= Teste 6: Deletando um vendedor por id ========");
+		System.out.println("Digite o id que você quer excluir!");
+		int id = sc.nextInt();
+		vendedorDao.deleteById(id);
+		System.out.println("Vendedor excluido com sucedsso!");
+		sc.close();
 	}
 }

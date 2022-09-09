@@ -11,7 +11,7 @@ public interface VendedorDao {
 
 	void update(Vendedor obj);
 
-	void deleteById(Vendedor id);
+	void deleteById(Integer id);
 
 	Vendedor findById(Integer id);
 
