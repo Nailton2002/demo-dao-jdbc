@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.db.DB;
@@ -53,26 +54,44 @@ public class DepartamentoDaoJDBC implements DepartamentoDao{
 
 	@Override
 	public void update(Departamento obj) {
-		// TODO Auto-generated method stub
 		
+
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Departamento findById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Departamento> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try {
+			pst = con.prepareStatement("SELECT * FROM department ORDER BY Name");
+			rs = pst.executeQuery();
+			
+			List<Departamento> list = new ArrayList<>();
+			while (rs.next()) {
+				Departamento obj = new Departamento();
+				obj.setId(rs.getInt("Id"));
+				obj.setNome(rs.getString("Nome"));
+				list.add(obj);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(pst);
+			DB.closeResultSet(rs);
+		}
 	}
-
 }
