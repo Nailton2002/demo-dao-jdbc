@@ -1,5 +1,6 @@
 package br.com.application;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.model.dao.DaoFactory;
@@ -29,5 +30,9 @@ public class Programa {
 			System.out.println(obj);
 		}
 
+		System.out.println("\n======= Teste 4: Inserindo vendedores ========");
+		Vendedor novoVendedor = new Vendedor(null, "Nailton", "nal@email.com", new Date(), 3000.0, departamento);
+		vendedorDao.insert(novoVendedor);
+		System.out.println("Inserindo, novo id = " + novoVendedor.getId());
 	}
 }

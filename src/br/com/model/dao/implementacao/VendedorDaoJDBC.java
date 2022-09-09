@@ -1,9 +1,11 @@
 package br.com.model.dao.implementacao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +27,40 @@ public class VendedorDaoJDBC implements VendedorDao{
 	
 	@Override
 	public void insert(Vendedor obj) {
-		// TODO Auto-generated method stub
 		
+		PreparedStatement st = null;
+		
+		try {
+			st = con.prepareStatement(
+					"INSERT INTO seller "
+				  + "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
+				  + "VALUES "
+				  + "(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new Date(obj.getDataNascimento().getTime()));
+			st.setDouble(4, obj.getBasaSalarial());
+			st.setInt(5, obj.getDepartamento().getId());
+			
+			int rowsAffected = st.executeUpdate();
+			
+			if (rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+			} else {
+				throw new DbException("Erro inesperado nenhuma linha afetada!");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
@@ -47,7 +81,7 @@ public class VendedorDaoJDBC implements VendedorDao{
 		ResultSet rs = null;
 		try {
 			st = con.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
+					  "SELECT seller.*,department.Name as DepName "
 					+ "FROM seller INNER JOIN department "
 					+ "ON seller.DepartmentId = department.Id "
 					+ "WHERE seller.Id = ?");
@@ -95,7 +129,7 @@ public class VendedorDaoJDBC implements VendedorDao{
 		
 		try {
 			st = con.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
+					  "SELECT seller.*,department.Name as DepName "
 					+ "FROM seller INNER JOIN department "
 					+ "ON seller.DepartmentId = department.Id "
 					+ "ORDER BY Name");
@@ -133,7 +167,7 @@ public class VendedorDaoJDBC implements VendedorDao{
 		
 		try {
 			st = con.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
+					  "SELECT seller.*,department.Name as DepName "
 					+ "FROM seller INNER JOIN department "
 					+ "ON seller.DepartmentId = department.Id "
 					+ "WHERE DepartmentId = ? "
